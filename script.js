@@ -1,8 +1,7 @@
 // ==========================================
-// Modo ejemplo (sin envío real)
+// CONFIGURACIÓN DE INVITADOS
 // ==========================================
 
-// Datos de invitados
 const guestDatabase = [
     // --- DESDE EL EXCEL (INFORMACIÓN ACTUALIZADA) ---
     {
@@ -358,7 +357,7 @@ searchInput.addEventListener('keypress', (e) => {
 
 botonEnviar.addEventListener('click', submitConfirmation);
 
-// Funcion para normalizar texto (quitar tildes y convertir a minusculas)
+// Función para normalizar texto (quitar tildes y convertir a minúsculas)
 function normalizeText(text) {
     return text
         .toLowerCase()
@@ -366,7 +365,7 @@ function normalizeText(text) {
         .replace(/[\u0300-\u036f]/g, '');
 }
 
-// Funcion para buscar invitado
+// Función para buscar invitado
 function searchGuest() {
     const searchTerm = searchInput.value.trim();
     
@@ -376,7 +375,7 @@ function searchGuest() {
         return;
     }
 
-    // Buscar invitado (sin distinguir tildes ni mayusculas)
+    // Buscar invitado (sin distinguir tildes ni mayúsculas)
     const normalizedSearch = normalizeText(searchTerm);
     const guest = guestDatabase.find(g => 
         normalizeText(g.name).includes(normalizedSearch)
@@ -388,7 +387,7 @@ function searchGuest() {
         searchMessage.style.color = '#c9b8a8';
     } else {
         hideGuestCard();
-        searchMessage.textContent = 'Lo siento, no has sido invitado. Si crees que es un error, por favor contactanos.';
+        searchMessage.textContent = 'Lo siento, no has sido invitado. Si crees que es un error, contáctanos.';
         searchMessage.style.color = '#c9b8a8';
         currentGuest = null;
     }
@@ -400,9 +399,10 @@ function showGuestCard(guest) {
     
     // Actualizar información del invitado
     guestName.textContent = guest.name;
-    guestMessage.textContent = `Te esperamos en nuestra boda. ${guest.allowedGuests} persona${guest.allowedGuests !== 1 ? 's' : ''} pueden asistir.`;
+    const s = guest.allowedGuests !== 1 ? 's' : '';
+    guestMessage.textContent = `Te esperamos en nuestra boda. ${guest.allowedGuests} persona${s} pueden asistir.`;
     
-    // Cargar familiares
+    // Cargar familiares (solo visual)
     familyList.innerHTML = '';
     guest.family.forEach(member => {
         const memberDiv = document.createElement('div');
@@ -414,7 +414,7 @@ function showGuestCard(guest) {
         familyList.appendChild(memberDiv);
     });
 
-    // Cargar checkboxes de asistencia
+    // Cargar checkboxes de asistencia (funcional)
     attendanceList.innerHTML = '';
     guest.family.forEach((member, index) => {
         const attendanceDiv = document.createElement('div');
@@ -426,8 +426,9 @@ function showGuestCard(guest) {
                     type="checkbox" 
                     id="attendance-${index}"
                     data-member-name="${member.name}"
+                    checked
                 >
-                <label for="attendance-${index}">Asistira</label>
+                <label for="attendance-${index}">Asistirá</label>
             </div>
         `;
         attendanceList.appendChild(attendanceDiv);
@@ -436,6 +437,11 @@ function showGuestCard(guest) {
     // Limpiar formulario
     dietaryInfo.value = '';
     mensajeEnvio.textContent = '';
+    
+    // Resetear estilos del botón
+    botonEnviar.classList.remove('success', 'sending');
+    botonEnviar.disabled = false;
+    botonEnviar.innerHTML = 'Confirmar Asistencia vía WhatsApp';
 
     // Mostrar tarjeta y ocultar mensaje inicial
     guestCard.classList.remove('hidden');
@@ -451,10 +457,10 @@ function hideGuestCard() {
 }
 
 // ==========================================
-// FUNCIÓN PRINCIPAL DE ENVÍO Y CONFIRMACIÓN (WHATSAPP)
+// FUNCIÓN DE ENVÍO POR WHATSAPP (SERVERLESS)
 // ==========================================
 function submitConfirmation() {
-    // 1. VALIDACIÓN: Verificar que haya un invitado cargado
+    // 1. VALIDACIÓN
     if (!currentGuest) {
         showStatusMessage('Por favor busca tu nombre primero', 'error');
         return;
@@ -470,50 +476,80 @@ function submitConfirmation() {
         }
     });
 
-    // 3. EFECTOS VISUALES - INICIO
+    if (attendingMembers.length === 0) {
+        showStatusMessage('Por favor selecciona al menos una persona para confirmar.', 'error');
+        return;
+    }
+
+    // 3. EFECTOS VISUALES
     const btn = document.getElementById('botonEnviar');
     btn.classList.add('sending');
     btn.disabled = true;
+    btn.innerHTML = 'Generando mensaje...';
 
-    // 4. SIMULACIÓN DE ENVÍO (solo ejemplo)
     const restricciones = dietaryInfo.value.trim() || 'Ninguna';
+
+    // 4. CONSTRUCCIÓN DEL MENSAJE DE WHATSAPP
+    // Usamos emojis para que se vea bonito
+    let mensaje = `*¡Hola! Quiero confirmar mi asistencia a la boda* 💍✨\n\n`;
+    mensaje += `*Invitado Principal:* ${currentGuest.name}\n`;
+    mensaje += `*Total Asistentes:* ${attendingMembers.length}\n`;
+    mensaje += `*Nombres:* ${attendingMembers.join(', ')}\n\n`;
+    mensaje += `*Restricciones alimentarias / Mensaje:* ${restricciones}`;
+
+    // Codificar el mensaje para URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    // 5. CONFIGURA AQUÍ TU NÚMERO
+    // Reemplaza los X con tu número real. Ejemplo: "56912345678"
+    const MI_NUMERO_WHATSAPP = "56927021306";
+
+    // Crear el link de WhatsApp
+    const urlWhatsapp = `https://wa.me/${MI_NUMERO_WHATSAPP}?text=${mensajeCodificado}`;
+
+    // 6. ENVIAR (ABRIR WHATSAPP)
     setTimeout(() => {
+        // Abrir WhatsApp en nueva pestaña
+        window.open(urlWhatsapp, '_blank');
+
+        // Actualizar UI
         btn.classList.remove('sending');
         btn.classList.add('success');
-        btn.innerHTML = '¡Confirmación registrada! &#10004;';
-        showStatusMessage('Ejemplo: se guardó localmente, no se envía.', 'success');
-        setTimeout(() => { guestCard.classList.add('confirmed'); }, 800);
-        saveToLocalStorage({ name: currentGuest.name, attending: attendingMembers, diet: restricciones });
-        // Rehabilitar botón tras unos segundos
+        btn.innerHTML = '¡Abriendo WhatsApp! &#10004;';
+        showStatusMessage('Si no se abrió WhatsApp, revisa tus bloqueos de pop-up.', 'success');
+        
+        // Guardar respaldo local (opcional)
+        saveToLocalStorage({ 
+            name: currentGuest.name, 
+            attending: attendingMembers, 
+            diet: restricciones 
+        });
+
+        // Restaurar botón después de unos segundos
         setTimeout(() => {
             btn.classList.remove('success');
             btn.disabled = false;
-            btn.innerHTML = 'Enviar Confirmacion';
-        }, 2000);
-    }, 1200);
-
-    // El resto se maneja en el then/catch arriba
+            btn.innerHTML = 'Reenviar Confirmación';
+        }, 5000);
+    }, 1000);
 }
 
-// (WhatsApp no requiere API aquí; usamos wa.me con texto codificado)
-
-// Función auxiliar para mostrar mensajes de estado debajo del botón
+// Función auxiliar para mostrar mensajes de estado
 function showStatusMessage(msg, type) {
     mensajeEnvio.textContent = msg;
     if (type === 'error') {
-        mensajeEnvio.style.color = '#c87a6f'; // Color rojizo/terracota
+        mensajeEnvio.style.color = '#c87a6f';
     } else {
-        mensajeEnvio.style.color = '#7a8e5f'; // Color verde oliva
+        mensajeEnvio.style.color = '#7a8e5f';
     }
 }
 
-// Función para guardar en localStorage (respaldo local)
+// Función para guardar en localStorage
 function saveToLocalStorage(data) {
     const saved = JSON.parse(localStorage.getItem('confirmations') || '[]');
     saved.push({...data, timestamp: new Date().toLocaleString()});
     localStorage.setItem('confirmations', JSON.stringify(saved));
-    console.log('Guardado en respaldo local:', data);
 }
 
-// Focus en input al cargar
+// Focus inicial
 searchInput.focus();
