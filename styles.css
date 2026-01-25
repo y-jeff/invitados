@@ -1,0 +1,555 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-navy: #2c3e50;
+    --secondary-teal: #4a7c8c;
+    --accent-rose: #d4a5a5;
+    --accent-lavender: #b4a5d6;
+    --accent-olive: #7a8e5f;
+    --accent-terracotta: #c87a6f;
+    --cream: #f9f7f4;
+    --light-gray: #e8e5e0;
+    --medium-gray: #a8a49c;
+    --dark-gray: #3a3633;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(44, 62, 80, 0.1);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    background: linear-gradient(135deg, #f9f7f4 0%, #f5f2ed 100%);
+    color: #8b7960;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ddd8d1;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #a8947f 0%, #8b7960 100%);
+    color: #faf8f5;
+    padding: 70px 30px;
+    text-align: center;
+}
+
+.decorative-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    opacity: 0.95;
+    color: #f5f2ed;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 4em;
+    font-weight: 900;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    color: #faf8f5;
+}
+
+.wedding-date {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    opacity: 0.98;
+    font-weight: 400;
+    color: #f5f2ed;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.95;
+    color: #ede8e1;
+}
+
+/* Search Section */
+.search-section {
+    padding: 40px 30px;
+    background: #ede8e1;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid var(--secondary-teal);
+    border-radius: 8px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: #e8e3d8;
+    color: #2c2420;
+}
+
+.search-input::placeholder {
+    color: var(--medium-gray);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--secondary-teal);
+    box-shadow: 0 0 0 3px rgba(74, 124, 140, 0.1);
+}
+
+.search-btn {
+    padding: 15px 30px;
+    background: var(--accent-terracotta);
+    color: #2c2420;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    background: #b86a5f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(200, 122, 111, 0.3);
+}
+
+.search-btn:active {
+    transform: translateY(0);
+}
+
+.search-message {
+    text-align: center;
+    color: #8b7960;
+    font-weight: 500;
+    min-height: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Guest Card */
+.guest-card {
+    padding: 40px 30px;
+    background: #ddd8d1;
+    animation: slideIn 0.3s ease;
+}
+
+.guest-card.confirmed {
+    animation: closeEnvelope 1s ease-in-out forwards, sendEnvelope 1.5s ease-in 0.5s forwards;
+}
+
+.family-section,
+.confirmation-section,
+.dietary-section,
+.boton-enviar {
+    display: none;
+}
+
+.guest-card.show-details .family-section,
+.guest-card.show-details .confirmation-section,
+.guest-card.show-details .dietary-section,
+.guest-card.show-details .boton-enviar {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes closeEnvelope {
+    0% {
+        transform: perspective(1000px) rotateX(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: perspective(1000px) rotateX(15deg) scale(1.05);
+    }
+    100% {
+        transform: perspective(1000px) rotateX(90deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes sendEnvelope {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(-500px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-600px) scale(0);
+    }
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--accent-rose);
+}
+
+.guest-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: #8b7960;
+    margin-bottom: 10px;
+}
+
+.guest-message {
+    color: #8b7960;
+    font-style: italic;
+    font-size: 1.1em;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+/* Family Section */
+.family-section {
+    margin-bottom: 30px;
+}
+
+.family-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    color: #8b7960;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-rose);
+    text-shadow: none;
+}
+
+.family-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.family-member {
+    padding: 12px 15px;
+    background: #e8e3d8;
+    border-left: 4px solid var(--accent-olive);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    word-break: break-word;
+}
+
+.family-member:hover {
+    background: #ddd5ca;
+    border-left-color: var(--secondary-teal);
+    box-shadow: 0 2px 8px rgba(74, 124, 140, 0.1);
+}
+
+.member-name {
+    font-weight: 500;
+    color: #8b7960;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.member-relation {
+    font-size: 0.9em;
+    color: #a8947f;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+/* Confirmation Section */
+.confirmation-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #e8e3d8;
+    border-left: 5px solid var(--accent-lavender);
+    border-radius: 8px;
+}
+
+.confirmation-label {
+    font-weight: 600;
+    color: #8b7960;
+    margin-bottom: 15px;
+    display: block;
+    font-size: 1.1em;
+    text-shadow: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.attendance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.attendance-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: #ddd8d1;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.attendance-item:hover {
+    background: #d4cfc5;
+}
+
+.attendance-name {
+    font-weight: 500;
+    color: #8b7960;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.attendance-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.attendance-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--secondary-teal);
+}
+
+.attendance-checkbox label {
+    font-size: 0.9em;
+    color: #8b7960;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Dietary Section */
+.dietary-section {
+    margin-bottom: 25px;
+}
+
+.dietary-label {
+    display: block;
+    font-weight: 600;
+    color: #8b7960;
+    margin-bottom: 8px;
+    text-shadow: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.dietary-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--secondary-teal);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95em;
+    resize: vertical;
+    transition: all 0.3s ease;
+    background: #e8e3d8;
+    color: #2c2420;
+}
+
+.dietary-input:focus {
+    outline: none;
+    border-color: var(--secondary-teal);
+    box-shadow: 0 0 0 3px rgba(74, 124, 140, 0.1);
+}
+
+/* =========================================
+   ESTILOS DEL BOTÓN DE CONFIRMACIÓN MEJORADO
+   ========================================= */
+
+.boton-enviar {
+    width: 100%;
+    padding: 16px 28px;
+    /* Degradado elegante usando tu color terracota y un tono ligeramente más oscuro */
+    background: linear-gradient(135deg, var(--accent-terracotta) 0%, #a8584d 100%);
+    color: #ffffff; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 50px; /* Bordes muy redondeados (estilo píldora) */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    
+    /* Transiciones suaves para todos los cambios de estado */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    margin-bottom: 20px;
+    /* Sombra difuminada del mismo color para dar profundidad */
+    box-shadow: 0 10px 20px rgba(200, 122, 111, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto Hover (Cuando pasas el mouse por encima) */
+.boton-enviar:hover {
+    transform: translateY(-3px) scale(1.02); /* Se eleva y crece un poco */
+    box-shadow: 0 15px 25px rgba(200, 122, 111, 0.5); /* La sombra crece */
+    background: linear-gradient(135deg, #d68c80 0%, #b86a5f 100%); /* Se aclara ligeramente */
+}
+
+/* Efecto Active (Cuando haces clic) */
+.boton-enviar:active {
+    transform: translateY(1px); /* Se hunde ligeramente */
+    box-shadow: 0 5px 10px rgba(200, 122, 111, 0.3);
+}
+
+/* Estado: Cargando / Enviando */
+.boton-enviar.sending {
+    background: var(--medium-gray);
+    color: #f0f0f0;
+    cursor: wait;
+    opacity: 0.9;
+    pointer-events: none; /* Evita que le den clic dos veces */
+    transform: scale(0.98);
+    box-shadow: none;
+}
+
+/* Estado: Éxito (Verde elegante usando tu paleta olive) */
+.boton-enviar.success {
+    background: linear-gradient(135deg, var(--accent-olive) 0%, #5d6e45 100%);
+    box-shadow: 0 10px 20px rgba(122, 142, 95, 0.4);
+    pointer-events: none; /* Ya no se puede clicar */
+}
+
+/* Animación de brillo (brillo que pasa de izquierda a derecha) */
+.boton-enviar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+/* Al pasar el mouse, el brillo cruza el botón */
+.boton-enviar:hover::after {
+    left: 100%;
+}
+
+.mensaje-envio {
+    text-align: center;
+    color: #8b7960;
+    font-weight: 500;
+    min-height: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Initial Message */
+.initial-message {
+    padding: 40px 30px;
+    text-align: center;
+    color: #8b7960;
+    font-size: 1.1em;
+    background: #ddd8d1;
+}
+
+.initial-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3em;
+    color: #8b7960;
+    font-weight: 500;
+    text-shadow: none;
+}
+
+/* Footer */
+.footer {
+    background: #ede8e1;
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 3px solid var(--accent-rose);
+    font-size: 0.95em;
+    color: #8b7960;
+    text-shadow: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer strong {
+    color: var(--secondary-teal);
+}
+
+.footer-location {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.3em;
+    margin-top: 8px;
+    color: #a8947f;
+    text-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .title {
+        font-size: 2.5em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    .guest-name {
+        font-size: 2em;
+    }
+
+    .family-title {
+        font-size: 1.2em;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+    .header {
+        padding: 50px 20px;
+    }
+
+    .search-section,
+    .guest-card,
+    .initial-message,
+    .footer {
+        padding: 30px 20px;
+    }
+}
