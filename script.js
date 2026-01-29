@@ -335,6 +335,15 @@ const guestDatabase = [
     { id: 63, name: "Jorge Pizarro López", allowedGuests: 1, family: [{name: "Jorge Pizarro López", relation: "Invitado Principal"}]},
     { id: 64, name: "Raúl Meléndez Arancibias", allowedGuests: 1, family: [{name: "Raúl Meléndez Arancibias", relation: "Invitado Principal"}]},
     { id: 65, name: "Damaris Jaramillo", allowedGuests: 1, family: [{name: "Damaris Jaramillo", relation: "Invitada Principal"}]},
+    {
+        id: 66,
+        name: "Elba Campos",
+        allowedGuests: 2,
+        family: [
+            { name: "Elba Campos", relation: "Invitada Principal" },
+            { name: "Victor Guerra", relation: "Esposo" }
+        ]
+    },
 ];
 
 // Estado de la aplicación
@@ -558,4 +567,5 @@ function saveToLocalStorage(data) {
 
 // Focus inicial
 searchInput.focus();
+
 
