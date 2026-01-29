@@ -293,14 +293,14 @@ const guestDatabase = [
         allowedGuests: 2,
         family: [
             { name: "Jose González Campos", relation: "Invitado Principal" },
-            { name: "Rosa Herrera Sepeda", relation: "Esposa" }
+            { name: "Rosa Herrera Cepeda", relation: "Esposa" }
         ]
     },
     {
         id: 41,
-        name: "Luisa Campos González",
+        name: "Luisa Campos Olmedo",
         allowedGuests: 1,
-        family: [{ name: "Luisa Campos González", relation: "Invitada Principal" }]
+        family: [{ name: "Luisa Campos Olmedo", relation: "Invitada Principal" }]
     },
     {
         id: 42,
@@ -567,6 +567,7 @@ function saveToLocalStorage(data) {
 
 // Focus inicial
 searchInput.focus();
+
 
 
 
