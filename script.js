@@ -191,7 +191,7 @@ const guestDatabase = [
         id: 27,
         name: "Mirna Rissi Melendez",
         allowedGuests: 1,
-        family: [{ name: "Mirna Rissi Melendez", relation: "Invitada Principal" }
+        family: [{ name: "Mirna Rissi Melendez", relation: "Invitada Principal" },
                  { name: "Gianela Figueroa Ardiles", relation: "Nieta" }
         ]
     },
@@ -567,5 +567,6 @@ function saveToLocalStorage(data) {
 
 // Focus inicial
 searchInput.focus();
+
 
 
