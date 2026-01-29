@@ -10,7 +10,7 @@ const guestDatabase = [
         allowedGuests: 2,
         family: [
             { name: "Luisa Camila González Vidal", relation: "Invitada Principal" },
-            { name: "Juan Biron Astete Ramirez", relation: "Pareja" }
+            { name: "Juan Byron Astete Ramirez", relation: "Pareja" }
         ]
     },
     {
@@ -191,7 +191,9 @@ const guestDatabase = [
         id: 27,
         name: "Mirna Rissi Melendez",
         allowedGuests: 1,
-        family: [{ name: "Mirna Rissi Melendez", relation: "Invitada Principal" }]
+        family: [{ name: "Mirna Rissi Melendez", relation: "Invitada Principal" }
+                 { name: "Gianela Figueroa Ardiles", relation: "Nieta" }
+        ]
     },
     {
         id: 28,
@@ -329,7 +331,9 @@ const guestDatabase = [
     { id: 59, name: "Camilo Lemus Harbottle", allowedGuests: 1, family: [{name: "Camilo Lemus Harbottle", relation: "Invitado Principal"}]},
     { id: 60, name: "Camila Araya Bolados", allowedGuests: 1, family: [{name: "Camila Araya Bolados", relation: "Invitada Principal"}]},
     { id: 61, name: "Constanza Pérez Díaz", allowedGuests: 1, family: [{name: "Constanza Pérez Díaz", relation: "Invitada Principal"}]},
-    { id: 62, name: "Jose Aracena Rojas", allowedGuests: 1, family: [{name: "Jose Aracena Rojas", relation: "Invitado Principal"}]}
+    { id: 62, name: "Jose Aracena Rojas", allowedGuests: 1, family: [{name: "Jose Aracena Rojas", relation: "Invitado Principal"}]},
+    { id: 63, name: "Jorge Pizarro López", allowedGuests: 1, family: [{name: "Jorge Pizarro López", relation: "Invitado Principal"}]},
+    { id: 64, name: "Raúl Meléndez Arancibias", allowedGuests: 1, family: [{name: "Raúl Meléndez Arancibias", relation: "Invitado Principal"}]},
 ];
 
 // Estado de la aplicación
